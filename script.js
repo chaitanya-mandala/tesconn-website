@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
             heroTitle.style.display = 'flex';
             heroTitle.style.alignItems = 'center';
             heroTitle.style.flexDirection = isMobile ? 'column' : 'row';
+
+            // Hide the title initially
+            heroTitle.style.opacity = '0';
             heroTitle.innerHTML = '';
 
             // Create spans for each word and add them to the container
@@ -103,8 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 heroTitle.appendChild(span);
             });
 
+
+            heroTitle.style.opacity = '1';
             // Animate each word in sequence
-            animateWordsSequentially(heroTitle.children, 0, 800);
+            animateWordsSequentially(heroTitle.children, 0, 500);
+
         }
     }
 
@@ -693,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     document.head.appendChild(style);
 
-    // Projects Carousel Functionality
+    // Bootstrap Carousel Functionality
     const projectsData = [
         {
             folder: '3dpcp',
@@ -757,136 +763,52 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ];
 
-    let currentIndex = 0;
-    let autoScrollInterval;
-    const itemsPerView = 3;
-
-    function createCarouselItem(project) {
-        const item = document.createElement('div');
-        item.className = 'carousel-item';
-        item.innerHTML = `
-            <div class="carousel-item-image">
-                <img src="images/projects/${project.folder}/1.jpg" alt="${project.name}"
-                     onerror="this.src='images/projects/${project.folder}/1.png'">
-            </div>
-            <div class="carousel-item-content">
-                <h4>${project.name}</h4>
-                <p>${project.description}</p>
-            </div>
-        `;
-
-        item.addEventListener('click', () => {
-            window.location.href = `gallery.html?project=${project.folder}`;
-        });
-
-        return item;
-    }
-
-    function initializeCarousel() {
-        const carousel = document.getElementById('projectsCarousel');
-        if (!carousel) return;
+    function initializeBootstrapCarousel() {
+        const carouselInner = document.getElementById('carouselInner');
+        if (!carouselInner) {
+            console.error('Carousel inner element not found!');
+            return;
+        }
 
         // Clear existing content
-        carousel.innerHTML = '';
+        carouselInner.innerHTML = '';
 
         // Create carousel items
-        projectsData.forEach(project => {
-            const item = createCarouselItem(project);
-            carousel.appendChild(item);
+        projectsData.forEach((project, index) => {
+            const imageSrc = `images/projects/${project.folder}/1.jpg`;
+            const fallbackSrc = `images/projects/${project.folder}/1.png`;
+
+            const carouselItem = document.createElement('div');
+            carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+
+            carouselItem.innerHTML = `
+                <div class="carousel-item-image">
+                    <img src="${imageSrc}" alt="${project.name}"
+                         onerror="this.src='${fallbackSrc}'"
+                         style="opacity: 1 !important;">
+                </div>
+                <div class="carousel-item-content">
+                    <h4>${project.name}</h4>
+                    <p>${project.description}</p>
+                </div>
+            `;
+
+            carouselItem.addEventListener('click', () => {
+                window.location.href = `gallery.html?project=${project.folder}`;
+            });
+
+            carouselInner.appendChild(carouselItem);
         });
 
-        // Set initial position
-        updateCarouselPosition();
-
-        // Start auto-scroll
-        startAutoScroll();
+        console.log('Bootstrap carousel initialized with', projectsData.length, 'items');
     }
 
-    function updateCarouselPosition() {
-        const carousel = document.getElementById('projectsCarousel');
-        if (!carousel) return;
-
-        const itemWidth = 300 + 20; // width + gap
-        const translateX = -currentIndex * itemWidth;
-        carousel.style.transform = `translateX(${translateX}px)`;
+    // Initialize Bootstrap carousel when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeBootstrapCarousel);
+    } else {
+        initializeBootstrapCarousel();
     }
-
-    function nextSlide() {
-        const maxIndex = Math.max(0, projectsData.length - itemsPerView);
-        currentIndex = (currentIndex + 1) % (maxIndex + 1);
-        updateCarouselPosition();
-    }
-
-    function prevSlide() {
-        const maxIndex = Math.max(0, projectsData.length - itemsPerView);
-        currentIndex = currentIndex === 0 ? maxIndex : currentIndex - 1;
-        updateCarouselPosition();
-    }
-
-    function startAutoScroll() {
-        autoScrollInterval = setInterval(nextSlide, 4000); // Auto-scroll every 4 seconds
-    }
-
-    function stopAutoScroll() {
-        if (autoScrollInterval) {
-            clearInterval(autoScrollInterval);
-        }
-    }
-
-    // Event listeners for carousel buttons
-    document.addEventListener('DOMContentLoaded', function () {
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const carouselContainer = document.querySelector('.projects-carousel-container');
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                stopAutoScroll();
-                prevSlide();
-                setTimeout(startAutoScroll, 2000); // Resume auto-scroll after 2 seconds
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                stopAutoScroll();
-                nextSlide();
-                setTimeout(startAutoScroll, 2000); // Resume auto-scroll after 2 seconds
-            });
-        }
-
-        // Pause auto-scroll on hover
-        if (carouselContainer) {
-            carouselContainer.addEventListener('mouseenter', stopAutoScroll);
-            carouselContainer.addEventListener('mouseleave', startAutoScroll);
-        }
-
-        // Initialize carousel
-        initializeCarousel();
-    });
-
-    // Responsive carousel adjustments
-    function adjustCarouselForScreen() {
-        const screenWidth = window.innerWidth;
-        let newItemsPerView = 3;
-
-        if (screenWidth <= 576) {
-            newItemsPerView = 1;
-        } else if (screenWidth <= 768) {
-            newItemsPerView = 2;
-        }
-
-        if (newItemsPerView !== itemsPerView) {
-            // Recalculate current index if needed
-            const maxIndex = Math.max(0, projectsData.length - newItemsPerView);
-            if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-            }
-            updateCarouselPosition();
-        }
-    }
-
-    window.addEventListener('resize', adjustCarouselForScreen);
 
     console.log('Tesconn Automation Systems website loaded successfully!');
 });

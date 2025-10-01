@@ -138,6 +138,7 @@ html {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  opacity: 0; /* Start hidden */
 }
 
 .hero-subtitle {
@@ -661,62 +662,113 @@ html {
   position: relative;
 }
 
-.projects-carousel-container {
-  position: relative;
-  max-width: 1200px;
+/* Bootstrap Carousel Customization */
+
+/* Prevent Bootstrap carousel height jumping */
+#projectsCarousel .carousel-item.active {
+  height: 350px;
+}
+
+#projectsCarousel .carousel-item-next,
+#projectsCarousel .carousel-item-prev {
+  height: 350px;
+}
+
+#projectsCarousel .carousel-item-next:not(.carousel-item-start),
+#projectsCarousel .active.carousel-item-end {
+  height: 350px;
+}
+
+#projectsCarousel .carousel-item-prev:not(.carousel-item-end),
+#projectsCarousel .active.carousel-item-start {
+  height: 350px;
+}
+
+/* Responsive height adjustments */
+@media (max-width: 768px) {
+  #projectsCarousel .carousel-item.active,
+  #projectsCarousel .carousel-item-next,
+  #projectsCarousel .carousel-item-prev {
+    height: 320px;
+  }
+}
+
+@media (max-width: 576px) {
+  #projectsCarousel .carousel-item.active,
+  #projectsCarousel .carousel-item-next,
+  #projectsCarousel .carousel-item-prev {
+    height: 280px;
+  }
+}
+#projectsCarousel {
+  max-width: 1000px;
   margin: 0 auto;
-  overflow: hidden;
-  border-radius: 15px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: transparent; /* Remove background */
 }
 
-.projects-carousel {
+#projectsCarousel .carousel-inner {
+  height: 350px; /* Fixed height to prevent jumping */
   display: flex;
-  transition: transform 0.5s ease;
-  gap: 20px;
-  padding: 20px;
+  align-items: center;
+  justify-content: center; /* Center items horizontally */
+  background: transparent; /* Remove background */
+  padding: 20px 0; /* Add padding for hover shadow */
+  overflow: visible; /* Allow shadow to be visible */
 }
 
-.carousel-item {
-  min-width: 300px;
-  background: rgba(255, 255, 255, 0.05);
+#projectsCarousel .carousel-item {
+  background: transparent; /* Remove background */
   border-radius: 15px;
-  overflow: hidden;
+  overflow: visible; /* Allow content to extend properly */
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  margin: 0 15px;
+  height: 350px;
+  width: 320px; /* Increased width for better proportions */
+  position: relative; /* Ensure proper positioning for hover effects */
 }
 
-.carousel-item:hover {
+#projectsCarousel .carousel-item:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 123, 255, 0.2);
   border-color: rgba(0, 123, 255, 0.3);
+  z-index: 10; /* Ensure hover item appears above others */
 }
 
-.carousel-item-image {
-  height: 200px;
+#projectsCarousel .carousel-item-image {
+  height: 200px; /* Adjusted for better proportions */
   overflow: hidden;
   position: relative;
+  border-radius: 15px 15px 0 0; /* Match top corners of item */
 }
 
-.carousel-item-image img {
+#projectsCarousel .carousel-item-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
   opacity: 1 !important;
+  display: block; /* Prevent inline spacing issues */
 }
 
-.carousel-item:hover .carousel-item-image img {
+#projectsCarousel .carousel-item:hover .carousel-item-image img {
   transform: scale(1.05);
 }
 
-.carousel-item-content {
+#projectsCarousel .carousel-item-content {
   padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.4); /* Slightly darker for better readability */
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 15px 15px; /* Match the item border radius */
+  margin-top: -1px; /* Remove gap between image and content */
+  margin-bottom: -1px; /* Remove gap between content and bottom border */
+  position: relative;
+  z-index: 1;
 }
 
-.carousel-item-content h4 {
+#projectsCarousel .carousel-item-content h4 {
   color: #ffffff;
   font-size: 1.2rem;
   font-weight: 600;
@@ -724,7 +776,7 @@ html {
   text-align: center;
 }
 
-.carousel-item-content p {
+#projectsCarousel .carousel-item-content p {
   color: #cccccc;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -732,94 +784,140 @@ html {
   text-align: center;
 }
 
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 123, 255, 0.9);
-  color: white;
-  border: none;
-  border-radius: 50%;
+/* Custom Bootstrap Carousel Controls */
+#projectsCarousel .carousel-control-prev,
+#projectsCarousel .carousel-control-next {
   width: 50px;
   height: 50px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(0, 123, 255, 0.9);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1;
   transition: all 0.3s ease;
-  z-index: 10;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.carousel-btn:hover {
+#projectsCarousel .carousel-control-prev {
+  left: 20px;
+}
+
+#projectsCarousel .carousel-control-next {
+  right: 20px;
+}
+
+#projectsCarousel .carousel-control-prev:hover,
+#projectsCarousel .carousel-control-next:hover {
   background: rgba(0, 123, 255, 1);
   transform: translateY(-50%) scale(1.1);
 }
 
-.carousel-btn-prev {
-  left: 20px;
+#projectsCarousel .carousel-control-prev-icon,
+#projectsCarousel .carousel-control-next-icon {
+  width: 20px;
+  height: 20px;
 }
 
-.carousel-btn-next {
-  right: 20px;
-}
-
-/* Responsive Projects Carousel */
+/* Responsive Bootstrap Carousel */
 @media (max-width: 768px) {
-  .carousel-item {
-    min-width: 250px;
+  #projectsCarousel {
+    max-width: 90%; /* Better mobile width */
+    background: transparent; /* Maintain transparent background */
   }
 
-  .carousel-item-image {
-    height: 150px;
+  #projectsCarousel .carousel-inner {
+    height: 320px; /* Adjusted for mobile */
+    justify-content: center; /* Center items on mobile */
+    background: transparent; /* Maintain transparent background */
+    padding: 15px 0; /* Add padding for hover shadow on mobile */
+    overflow: visible; /* Allow shadow to be visible */
   }
 
-  .carousel-item-content {
+  #projectsCarousel .carousel-item {
+    height: 320px; /* Adjusted for mobile */
+    width: 280px; /* Adjusted for mobile */
+    margin: 0 10px;
+    background: transparent; /* Maintain transparent background */
+    overflow: visible; /* Allow content to extend properly */
+  }
+
+  #projectsCarousel .carousel-item-image {
+    height: 180px; /* Adjusted for mobile */
+  }
+
+  #projectsCarousel .carousel-item-content {
     padding: 1rem;
+    background: rgba(0, 0, 0, 0.4); /* Maintain readability */
+    border-radius: 0 0 15px 15px;
+    margin-top: -1px; /* Remove gap between image and content */
+    margin-bottom: -1px; /* Remove gap between content and bottom border */
+    position: relative;
+    z-index: 1;
   }
 
-  .carousel-item-content h4 {
+  #projectsCarousel .carousel-item-content h4 {
     font-size: 1.1rem;
   }
 
-  .carousel-item-content p {
+  #projectsCarousel .carousel-item-content p {
     font-size: 0.85rem;
   }
 
-  .carousel-btn {
+  #projectsCarousel .carousel-control-prev,
+  #projectsCarousel .carousel-control-next {
     width: 40px;
     height: 40px;
-    font-size: 1rem;
   }
 
-  .carousel-btn-prev {
+  #projectsCarousel .carousel-control-prev {
     left: 10px;
   }
 
-  .carousel-btn-next {
+  #projectsCarousel .carousel-control-next {
     right: 10px;
   }
 }
 
 @media (max-width: 576px) {
-  .carousel-item {
-    min-width: 200px;
+  #projectsCarousel {
+    max-width: 95%; /* Better small mobile width */
+    background: transparent; /* Maintain transparent background */
   }
 
-  .carousel-item-image {
-    height: 120px;
+  #projectsCarousel .carousel-inner {
+    height: 280px; /* Adjusted for small mobile */
+    justify-content: center; /* Center items on small mobile */
+    background: transparent; /* Maintain transparent background */
+    padding: 10px 0; /* Add padding for hover shadow on small mobile */
+    overflow: visible; /* Allow shadow to be visible */
   }
 
-  .carousel-item-content {
+  #projectsCarousel .carousel-item {
+    height: 280px; /* Adjusted for small mobile */
+    width: 240px; /* Adjusted for small mobile */
+    margin: 0 8px;
+    background: transparent; /* Maintain transparent background */
+    overflow: visible; /* Allow content to extend properly */
+  }
+
+  #projectsCarousel .carousel-item-image {
+    height: 150px; /* Adjusted for small mobile */
+  }
+
+  #projectsCarousel .carousel-item-content {
     padding: 0.8rem;
+    background: rgba(0, 0, 0, 0.4); /* Maintain readability */
+    border-radius: 0 0 15px 15px;
+    margin-top: -1px; /* Remove gap between image and content */
+    margin-bottom: -1px; /* Remove gap between content and bottom border */
+    position: relative;
+    z-index: 1;
   }
 
-  .carousel-item-content h4 {
+  #projectsCarousel .carousel-item-content h4 {
     font-size: 1rem;
   }
 
-  .carousel-item-content p {
+  #projectsCarousel .carousel-item-content p {
     font-size: 0.8rem;
   }
 }
@@ -1180,7 +1278,7 @@ html {
 /* Mobile scroll indicator adjustment */
 @media (max-width: 768px) {
   .scroll-indicator {
-    bottom: 60px; /* Move higher for mobile address bar */
+    bottom: 100px; /* Move higher for mobile address bar */
   }
 }
 
@@ -1533,13 +1631,109 @@ html {
   transform: translateY(-2px);
 }
 
-.gallery-header {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-  padding-top: 100px;
-  padding-bottom: 60px;
-  min-height: 250px;
+/* Floating Back Button */
+.floating-back-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 1000;
+  animation: floatUp 0.6s ease-out;
+}
+
+.back-btn-float {
   display: flex;
   align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-btn-float:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 123, 255, 0.4);
+}
+
+.back-btn-float i {
+  font-size: 1rem;
+}
+
+.back-btn-float span {
+  font-weight: 500;
+}
+
+@keyframes floatUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Floating Back Button */
+@media (max-width: 768px) {
+  .floating-back-btn {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .back-btn-float {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .back-btn-float span {
+    display: none; /* Hide text on mobile, show only icon */
+  }
+
+  .back-btn-float {
+    border-radius: 50%; /* Make it circular on mobile */
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .floating-back-btn {
+    bottom: 15px;
+    left: 15px;
+  }
+
+  .back-btn-float {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+  }
+}
+
+.gallery-header {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  padding-top: 80px;
+  padding-bottom: 40px;
+  min-height: 220px; /* Increased to prevent trimming */
+  display: flex;
+  align-items: center;
+  overflow: visible; /* Ensure content is not clipped */
+}
+
+.gallery-header .container {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .gallery-title {
@@ -1551,6 +1745,10 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1.2;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  margin-top: 0; /* Remove any top margin */
 }
 
 .gallery-subtitle {
@@ -1682,6 +1880,12 @@ html {
 
 /* Responsive Gallery */
 @media (max-width: 768px) {
+  .gallery-header {
+    padding-top: 70px;
+    padding-bottom: 30px;
+    min-height: 180px;
+  }
+
   .gallery-title {
     font-size: 2.5rem;
   }
@@ -1717,6 +1921,12 @@ html {
 }
 
 @media (max-width: 576px) {
+  .gallery-header {
+    padding-top: 60px;
+    padding-bottom: 25px;
+    min-height: 160px;
+  }
+
   .gallery-title {
     font-size: 2rem;
   }
@@ -1748,5 +1958,69 @@ html {
 
   .gallery-info p {
     font-size: 0.8rem;
+  }
+}
+
+/* Single Rotating Gear */
+.single-gear-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.single-gear {
+  position: absolute;
+  font-size: 50vh; /* 50% of viewport height */
+  color: rgba(255, 255, 255, 0.1);
+  animation: rotateGear 20s linear infinite;
+  opacity: 0.8;
+}
+
+/* Desktop: Right vertically centered, half visible */
+@media (min-width: 769px) {
+  .single-gear {
+    right: -25vh; /* Half gear visible */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* Mobile: Bottom horizontally centered, half visible */
+@media (max-width: 768px) {
+  .single-gear {
+    bottom: -15vh; /* Moved higher - less negative value */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40vh; /* Slightly smaller on mobile */
+  }
+}
+
+@keyframes rotateGear {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile gear animation with proper centering */
+@media (max-width: 768px) {
+  .single-gear {
+    animation: rotateGearMobile 20s linear infinite;
+  }
+}
+
+@keyframes rotateGearMobile {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
   }
 }
