@@ -1,3 +1,120 @@
+// Initialize Particles.js - Updated
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize particles.js
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 100,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: ['#667eea', '#764ba2', '#4facfe', '#2c3e50', '#34495e', '#007bff', '#00d4ff']
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 0.5,
+                        opacity_min: 0.3,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 4,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        size_min: 0.5,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 120,
+                    color: '#ffffff',
+                    opacity: 0.35,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 3,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    ontouchstart: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    ontouchmove: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 300,
+                        line_linked: {
+                            opacity: 0.8
+                        }
+                    },
+                    bubble: {
+                        distance: 300,
+                        size: 30,
+                        duration: 1.5,
+                        opacity: 6,
+                        speed: 2
+                    },
+                    repulse: {
+                        distance: 150,
+                        duration: 0.3
+                    },
+                    push: {
+                        particles_nb: 6
+                    },
+                    remove: {
+                        particles_nb: 3
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    }
+});
+
 // Smooth scrolling and animations
 document.addEventListener('DOMContentLoaded', function () {
 
