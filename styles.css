@@ -152,6 +152,19 @@ html {
   width: 100%;
 }
 
+.hero-welcome {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(90deg, #ffffff, #007bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 0.8s ease-out;
+}
+
 .hero-title {
   font-size: 4rem;
   font-weight: 800;
@@ -170,7 +183,7 @@ html {
   font-size: 1.5rem;
   font-weight: 400;
   color: #cccccc;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   animation: fadeInUp 1s ease-out 0.2s both;
   text-align: center;
 }
@@ -182,6 +195,46 @@ html {
   margin-bottom: 2rem;
   animation: fadeInUp 1s ease-out 0.4s both;
   text-align: center;
+}
+
+.hero-typing-container {
+  font-size: 1.1rem;
+  color: #bbbbbb;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease-out 0.6s both;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-typing-text {
+  display: inline;
+  font-style: italic;
+}
+
+.typing-cursor {
+  color: #007bff;
+  font-weight: 300;
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .hero-buttons {
@@ -1314,6 +1367,10 @@ html {
     padding: 3rem 0;
   }
 
+  .hero-welcome {
+    font-size: 1.75rem;
+  }
+
   .hero-title {
     font-size: 3.5rem;
     min-height: 160px;
@@ -1323,7 +1380,6 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
   }
 
   .hero-title span {
@@ -1346,6 +1402,12 @@ html {
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .hero-typing-container {
+    font-size: 1.1rem;
+    max-width: 90%;
+    margin-bottom: 2rem;
   }
 
   .hero-buttons {
@@ -1459,6 +1521,10 @@ html {
     padding: 2rem 0;
   }
 
+  .hero-welcome {
+    font-size: 1.4rem;
+  }
+
   .hero-title {
     font-size: 2.8rem;
     min-height: 140px;
@@ -1484,6 +1550,13 @@ html {
     font-size: 1rem;
     margin-bottom: 2rem;
     max-width: 95%;
+  }
+
+  .hero-typing-container {
+    font-size: 1rem;
+    max-width: 95%;
+    margin-bottom: 1.5rem;
+    min-height: 3rem;
   }
 
   .hero-buttons .btn {

@@ -927,6 +927,58 @@ document.addEventListener('DOMContentLoaded', function () {
         initializeBootstrapCarousel();
     }
 
+    // Typing Animation for Hero Section
+    function initTypingAnimation() {
+        const typingText = document.getElementById('typingText');
+        if (!typingText) return;
+
+        const texts = [
+            "Your one stop solution for New Product Innovation & Development, cost effective OEM Manufacturing, Academic & Industrial Research and Development Support and Industrial Automation.",
+            "With years of Education, R&D and work experience in JAPAN our founders have created a unique DNA for TESCONN which is a blend of Indian Values with Japanese Quality, Craftmanship and Respect."
+        ];
+
+        let currentTextIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 30; // milliseconds per character (faster typing)
+        let pauseTime = 3000; // pause between texts (shorter pause)
+
+        function typeText() {
+            const currentText = texts[currentTextIndex];
+
+            if (isDeleting) {
+                // Delete characters
+                typingText.textContent = currentText.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                typingSpeed = 3; // much faster deletion
+            } else {
+                // Type characters
+                typingText.textContent = currentText.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                typingSpeed = 30; // faster typing speed
+            }
+
+            if (!isDeleting && currentCharIndex === currentText.length) {
+                // Finished typing, pause then start deleting
+                typingSpeed = pauseTime;
+                isDeleting = true;
+            } else if (isDeleting && currentCharIndex === 0) {
+                // Finished deleting, move to next text
+                isDeleting = false;
+                currentTextIndex = (currentTextIndex + 1) % texts.length;
+                typingSpeed = 500; // pause before starting next text
+            }
+
+            setTimeout(typeText, typingSpeed);
+        }
+
+        // Start typing animation after a delay
+        setTimeout(typeText, 2000);
+    }
+
+    // Initialize typing animation
+    initTypingAnimation();
+
     console.log('Tesconn Automation Systems website loaded successfully!');
 });
 
